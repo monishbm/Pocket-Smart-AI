@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Login · PocketSmart AI{% endblock %}{% block content %}
+<section class="auth-wrap"><form class="panel form-card" action="/login" method="post"><span class="eyebrow">WELCOME BACK</span><h1>Login</h1>
+{% if registered %}<div class="alert success">Account created. You can log in now.</div>{% endif %}{% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+<label>Username<input name="username" autocomplete="username" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+<button class="button full">Login</button><p class="muted">New here? <a href="/register">Create an account</a>.</p></form></section>{% endblock %}

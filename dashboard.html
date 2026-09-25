@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Dashboard · PocketSmart AI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">DASHBOARD</span><h1>Hello, {{ user.full_name }}</h1><p>Choose a planner and turn your budget into an actionable plan.</p></div>
+<div class="mode-badge {{ 'online' if ai_enabled else 'demo' }}">{{ "Gemini AI active" if ai_enabled else "Demo mode" }}</div></section>
+<section class="grid three"><a class="card planner-card" href="/home-planner"><div class="icon">🏠</div><h2>Home Interior</h2><p>Furniture, lighting, fans and dining.</p><span>Plan now →</span></a>
+<a class="card planner-card" href="/party-planner"><div class="icon">🎉</div><h2>Party</h2><p>Venue, food, decoration and entertainment.</p><span>Plan now →</span></a>
+<a class="card planner-card" href="/jewelry-planner"><div class="icon">💎</div><h2>Jewelry</h2><p>Occasion and outfit-aware recommendations.</p><span>Plan now →</span></a></section>
+<section class="section"><div class="section-title"><h2>Recent recommendations</h2><a href="/history">View all</a></div>
+{% if history %}<div class="history-list">{% for rec in history %}<a class="history-row" href="/history/{{ rec.id }}"><strong>{{ rec.recommendation_type|title }}</strong><span>Budget ₹{{ "%.2f"|format(rec.result_summary.total_budget or 0) }}</span><span>{{ rec.timestamp[:19].replace("T"," ") }} UTC</span></a>{% endfor %}</div>
+{% else %}<div class="empty">No recommendations yet.</div>{% endif %}</section>{% endblock %}

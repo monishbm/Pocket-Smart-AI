@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ kind }} Result · PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+    <div>
+        <span class="eyebrow">{{ kind|upper }} RESULT</span>
+        <h1>Your Budget Plan</h1>
+        <p>
+            Generated in
+            <strong>{{ result.ai_mode | default("unknown") }}</strong>
+            mode.
+        </p>
+    </div>
+
+    <a class="button secondary" href="/history/{{ recommendation_id }}">
+        Saved Copy
+    </a>
+</section>
+
+<section class="budget-strip">
+    <div>
+        <small>Total Budget</small>
+        <strong>₹{{ "%.2f"|format(result.total_budget or 0) }}</strong>
+    </div>
+
+    <div>
+        <small>Remaining</small>
+        <strong>₹{{ "%.2f"|format(result.remaining_budget or 0) }}</strong>
+    </div>
+
+    <div>
+        <small>Allocated</small>
+        <strong>
+            ₹{{ "%.2f"|format((result.total_budget or 0) - (result.remaining_budget or 0)) }}
+        </strong>
+    </div>
+</section>
+
+{% if result.outfit_analysis %}
+<section class="panel section">
+    <h2>Outfit Analysis</h2>
+
+    <div class="grid three compact">
+
+        <div>
+            <small>Colors</small>
+            <p>{{ result.outfit_analysis.colors | join(", ") }}</p>
+        </div>
+
+        <div>
+            <small>Style</small>
+            <p>{{ result.outfit_analysis.style }}</p>
+        </div>
+
+        <div>
+            <small>Formality</small>
+            <p>{{ result.outfit_analysis.formality }}</p>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+{% if result.budget_breakdown %}
+<section class="section">
+
+    <h2>Recommendations</h2>
+
+    {% for category in result.budget_breakdown %}
+
+    <article class="category panel">
+
+        <div class="section-title">
+            <h3>{{ category.category }}</h3>
+
+            <strong>
+                ₹{{ "%.2f"|format(category.allocated_budget or 0) }}
+            </strong>
+        </div>
+
+        <div class="item-grid">
+
+            {# FIXED HERE #}
+            {% for item in category["items"] %}
+
+            <div class="item-card">
+
+                <h4>{{ item.name }}</h4>
+
+                <p>{{ item.description }}</p>
+
+                <div class="price">
+                    ₹{{ "%.2f"|format(item.estimated_price or 0) }}
+                    <small>Qty {{ item.quantity }}</small>
+                </div>
+
+                <div class="link-row">
+
+                    {% if item.shopping_links %}
+                        {% for platform, url in item.shopping_links.items() %}
+                            <a href="{{ url }}" target="_blank">
+                                {{ platform|title }}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </article>
+
+    {% endfor %}
+
+</section>
+{% endif %}
+
+
+{% if result.jewelry_recommendations %}
+<section class="section">
+
+    <h2>Jewelry Recommendations</h2>
+
+    <div class="item-grid">
+
+        {% for item in result.jewelry_recommendations %}
+
+        <div class="item-card panel">
+
+            <h3>{{ item.name }}</h3>
+
+            <p>{{ item.description }}</p>
+
+            <div class="price">
+                ₹{{ "%.2f"|format(item.estimated_price or 0) }}
+            </div>
+
+            <div class="link-row">
+
+                {% if item.shopping_links %}
+                    {% for platform, url in item.shopping_links.items() %}
+                        <a href="{{ url }}" target="_blank">
+                            {{ platform|title }}
+                        </a>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+{% endif %}
+
+
+{% if result.calculation_table %}
+<section class="panel section">
+
+    <h2>Budget Calculation</h2>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>% Budget</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for row in result.calculation_table %}
+
+                <tr>
+                    <td>{{ row.category }}</td>
+                    <td>{{ row.items_count }}</td>
+                    <td>₹{{ "%.2f"|format(row.total_cost or 0) }}</td>
+                    <td>{{ "%.2f"|format(row.percentage_of_budget or 0) }}%</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+{% endif %}
+
+
+{% set suggestions = result.additional_suggestions or result.styling_tips %}
+
+{% if suggestions %}
+<section class="panel section">
+
+    <h2>
+        {{ "Styling Tips" if result.styling_tips else "Additional Suggestions" }}
+    </h2>
+
+    <ul class="tips">
+
+        {% for tip in suggestions %}
+        <li>{{ tip }}</li>
+        {% endfor %}
+
+    </ul>
+
+</section>
+{% endif %}
+
+{% endblock %}

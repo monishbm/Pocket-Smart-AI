@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}History · PocketSmart AI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">HISTORY</span><h1>Saved recommendations</h1><p>Plans are stored locally in SQLite.</p></div></section>
+{% if records %}<div class="history-list">{% for rec in records %}<a class="history-row panel" href="/history/{{rec.id}}"><strong>{{rec.recommendation_type|title}}</strong><span>₹{{"%.2f"|format(rec.result_summary.total_budget or 0)}}</span><span>Remaining ₹{{"%.2f"|format(rec.result_summary.remaining_budget or 0)}}</span><span>{{rec.timestamp[:19].replace("T"," ")}} UTC</span></a>{% endfor %}</div>{% else %}<div class="empty">No saved recommendations yet.</div>{% endif %}{% endblock %}

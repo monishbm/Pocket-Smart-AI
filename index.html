@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}PocketSmart AI · Smart Budget Assistant{% endblock %}{% block content %}
+<section class="hero"><div><span class="eyebrow">GENAI BUDGET PLANNING</span><h1>Spend smarter across home, events, and jewelry.</h1>
+<p class="lead">Turn a fixed INR budget and your preferences into an itemized, platform-linked recommendation plan.</p>
+<div class="actions">{% if user %}<a class="button" href="/dashboard">Open Dashboard</a>{% else %}<a class="button" href="/register">Create account</a><a class="button secondary" href="/login">Login</a>{% endif %}</div>
+<p class="status-line">AI mode: <strong>{{ "Gemini connected" if ai_enabled else "Demo fallback — add GOOGLE_API_KEY to enable Gemini" }}</strong></p></div>
+<div class="hero-card"><div class="metric"><span>3</span><small>Smart planners</small></div><div class="metric"><span>₹</span><small>India-first budgets</small></div><div class="metric"><span>AI</span><small>Text + image capable</small></div></div></section>
+<section class="grid three"><article class="card"><div class="icon">🏠</div><h2>Home Interior</h2><p>Lights, fans, furniture and dining.</p></article>
+<article class="card"><div class="icon">🎉</div><h2>Party Planner</h2><p>Venue, catering, décor and entertainment.</p></article>
+<article class="card"><div class="icon">💎</div><h2>Jewelry Planner</h2><p>Occasion-aware picks with optional outfit analysis.</p></article></section>{% endblock %}

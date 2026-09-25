@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Party Planner · PocketSmart AI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">EVENT PLANNING</span><h1>Plan a party budget</h1><p>Split spending across the categories you need.</p></div></section>
+<form class="panel planner-form" action="/party-budget" method="post"><div class="form-grid">
+<label>Total budget (₹)<input type="number" name="total_budget" min="1" step=".01" value="50000" required></label>
+<label>Party type<select name="party_type"><option>Birthday</option><option>Wedding</option><option>Anniversary</option><option>Corporate</option></select></label>
+<label>Guests<input type="number" name="num_guests" min="1" value="50" required></label>
+<label>Venue type<select name="venue_type"><option>Home</option><option>Banquet Hall</option><option>Hotel</option><option>Restaurant</option><option>Outdoor</option></select></label></div>
+<fieldset><legend>Include</legend><div class="check-row"><label><input type="checkbox" name="needs_catering" value="true" checked> Catering</label><label><input type="checkbox" name="needs_decoration" value="true" checked> Decoration</label><label><input type="checkbox" name="needs_entertainment" value="true" checked> Entertainment</label></div></fieldset>
+<label>Additional requirements<textarea name="additional_requirements" rows="4"></textarea></label><button class="button">Generate party plan</button></form>{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Home Planner · PocketSmart AI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">HOME INTERIOR</span><h1>Plan a home budget</h1><p>The generated plan is capped at your budget.</p></div></section>
+<form class="panel planner-form" action="/home-budget" method="post"><div class="form-grid">
+<label>Total budget (₹)<input type="number" name="total_budget" min="1" step=".01" value="50000" required></label><label>Lights<input type="number" name="num_lights" min="0" value="5" required></label>
+<label>Ceiling fans<input type="number" name="num_fans" min="0" value="2" required></label><label>Furniture pieces<input type="number" name="num_furniture" min="0" value="3" required></label>
+<label>Dining tables<input type="number" name="num_dining_tables" min="0" value="1" required></label></div>
+<fieldset><legend>Rooms</legend><div class="check-row"><label><input type="checkbox" name="has_living_room" value="true" checked> Living room</label><label><input type="checkbox" name="has_kitchen" value="true"> Kitchen</label><label><input type="checkbox" name="has_bedroom" value="true" checked> Bedroom</label></div></fieldset>
+<label>Additional requirements<textarea name="additional_requirements" rows="4"></textarea></label><button class="button">Generate home plan</button></form>{% endblock %}
